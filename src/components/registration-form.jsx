@@ -23,8 +23,9 @@ const Example = (props) => {
   const [checkPass, setCheckPass] = useState(``);
   const [conditions, setConditions] = useState(false);
 
+  const allFieldsFulled = Boolean(email.length) && name.length && pass.length && checkPass.length;
   const isValidField = true;
-  const isValidForm = isValidField && conditions;
+  const isValidForm = allFieldsFulled && isValidField && conditions;
 
   const [touched, setTouched] = useState(false);
 
