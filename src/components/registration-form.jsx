@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
 const Rules = () => {
@@ -15,31 +15,65 @@ const Rules = () => {
 };
 
 const Example = (props) => {
+  
+  const [email, setMail] = useState(``);
+  const [name, setName] = useState(``);
+  const [pass, setPass] = useState(``);
+  const [checkPass, setCheckPass] = useState(``);
+  const [conditions, setConditions] = useState(false);
+
+  const a = email.length > 6 ? `green` : `red`; 
+
+  const changeHandlerName = (e) => {
+    const value = e.target.value;      
+    setName(value);
+  };
+
+  const changeHandlerEmail = (e) => {
+    const value = e.target.value;    
+    setMail(value);
+  }
+
+  const changeHandlerPass = (e) => {
+    const value = e.target.value;    
+    setPass(value);
+  }
+
+  const changeHandlerCheckPass = (e) => {
+    const value = e.target.value;    
+    setCheckPass(value);
+  }
+
+  const changeHandlerConditions = () => {     
+    setConditions(!conditions);    
+  }
+
   return (
     <Form onSubmit={(e)=>{
       e.preventDefault();
-      console.log(`submiting`)
+      console.log({name, email,pass, checkPass, conditions});
     }}>
+      
       <FormGroup>
         <Label style={{fontWeight: `bold`}} for="email">Email</Label>
-        <Input type="email" name="email" id="email" placeholder="Введите e-mail" />
+        <Input style={{borderColor: a}} value={email} onChange={changeHandlerEmail} type="email" name="email" id="email" placeholder="Введите e-mail" />
       </FormGroup>
       <FormGroup>
         <Label style={{fontWeight: `bold`}} for="nikname">Никнейм</Label>
-        <Input type="text" name="nikname" id="nikname" />        
+        <Input value={name} onChange={changeHandlerName} type="text" name="nikname" id="nikname" />        
       </FormGroup>
       <FormGroup>
         <Label style={{fontWeight: `bold`}} for="password">Пароль</Label>
-        <Input type="password" name="password" id="password" placeholder="Введите пароль" />
+        <Input value={pass} onChange={changeHandlerPass} type="password" name="password" id="password" placeholder="Введите пароль" />
       </FormGroup>
       <Rules />
       <FormGroup>
         <Label style={{fontWeight: `bold`}} for="checkPassword">Пароль еще раз</Label>
-        <Input type="checkPassword" name="checkPassword" id="checkPassword" placeholder="Введите еще раз пароль" />
+        <Input value={checkPass} onChange={changeHandlerCheckPass} type="checkPassword" name="checkPassword" id="checkPassword" placeholder="Введите еще раз пароль" />
       </FormGroup>
       <FormGroup check>
         <Label check>
-          <Input type="checkbox" />{' '}
+          <Input value={conditions} onChange={changeHandlerConditions} type="checkbox" />{' '}
           Я принимаю условия <a href="#">пользовательского соглашения</a>
         </Label>
       </FormGroup>
