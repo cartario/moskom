@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "6fb4e38e68d3062b52520642340995cc",
+    "revision": "4ffa475cd8410181fd69bd585ffcceec",
     "url": "/moskom/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/moskom/static/css/2.d9ad5f5c.chunk.css"
   },
   {
-    "revision": "08f1f0e0e9370d93bd10",
+    "revision": "73c2643bc4e0bd792cd2",
     "url": "/moskom/static/css/main.3d756c76.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/moskom/static/js/2.92968688.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "08f1f0e0e9370d93bd10",
-    "url": "/moskom/static/js/main.e05f2149.chunk.js"
+    "revision": "73c2643bc4e0bd792cd2",
+    "url": "/moskom/static/js/main.5cea4030.chunk.js"
   },
   {
     "revision": "e0d98ed1a29b585d428b",
