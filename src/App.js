@@ -1,12 +1,12 @@
 import React from 'react';
-import Registration from './components/registration';
+import Modal from './components/modal';
 import './App.css';
 
 
 function App() {
   return (
     <div className="App">
-      <Registration 
+      <Modal 
       buttonLabel={`Регистрация`}
       className={`registration`}
       />

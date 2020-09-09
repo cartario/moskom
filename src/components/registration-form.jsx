@@ -15,12 +15,18 @@ const Rules = () => {
 };
 
 const Example = (props) => {
+  const {setSubmitting, setModal} = props;
   
   const [email, setMail] = useState(``);
   const [name, setName] = useState(``);
   const [pass, setPass] = useState(``);
   const [checkPass, setCheckPass] = useState(``);
   const [conditions, setConditions] = useState(false);
+
+  const isValidField = true;
+  const isValidForm = isValidField && conditions;
+
+  const [touched, setTouched] = useState(false);
 
   const a = email.length > 6 ? `green` : `red`; 
 
@@ -32,6 +38,7 @@ const Example = (props) => {
   const changeHandlerEmail = (e) => {
     const value = e.target.value;    
     setMail(value);
+    setTouched(false)
   }
 
   const changeHandlerPass = (e) => {
@@ -48,15 +55,23 @@ const Example = (props) => {
     setConditions(!conditions);    
   }
 
+  const blurHandler = () => {
+    setTouched(!touched);
+
+    console.log(touched)
+  }
+
   return (
     <Form onSubmit={(e)=>{
       e.preventDefault();
-      console.log({name, email,pass, checkPass, conditions});
+      setSubmitting(true);
+      setModal(false);
+      console.log(JSON.stringify({name, email,pass, checkPass, conditions}));
     }}>
       
       <FormGroup>
         <Label style={{fontWeight: `bold`}} for="email">Email</Label>
-        <Input style={{borderColor: a}} value={email} onChange={changeHandlerEmail} type="email" name="email" id="email" placeholder="Введите e-mail" />
+        <Input style={{borderColor: a}} value={email} onFocus={()=>setTouched(false)} onBlur={blurHandler} onChange={changeHandlerEmail} type="email" name="email" id="email" placeholder="Введите e-mail" />
       </FormGroup>
       <FormGroup>
         <Label style={{fontWeight: `bold`}} for="nikname">Никнейм</Label>
@@ -77,7 +92,7 @@ const Example = (props) => {
           Я принимаю условия <a href="#">пользовательского соглашения</a>
         </Label>
       </FormGroup>
-      <div style={{textAlign: `center`, }}><Button style={{backgroundColor: `#558CB7`}}>Зарегистрироваться</Button></div>
+      <div style={{textAlign: `center`, }}><Button disabled={!isValidForm} style={{backgroundColor: `#558CB7`}}>Зарегистрироваться</Button></div>
     </Form>
   );
 }

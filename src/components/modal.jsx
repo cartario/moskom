@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import RegistrationForm from './registration-form';
 
 const ModalExample = (props) => {
+  const [isSubmitting, setSubmitting] = useState(false); 
+  
+  const styledButton = isSubmitting ? `green` :  `#558CB7`;
+
   const {
     buttonLabel,
     className
@@ -15,16 +19,18 @@ const ModalExample = (props) => {
   return (
     
     <div>
-      <Button style={{backgroundColor: `#558CB7`, borderColor: `#558CB7`}} color="danger" onClick={toggle}>{buttonLabel}</Button>
+      <Button 
+        style={{backgroundColor: styledButton, borderColor: `#558CB7`}} 
+        color="danger" 
+        onClick={toggle} 
+        disabled={isSubmitting}
+        >{buttonLabel}
+      </Button>
       <Modal isOpen={modal} toggle={toggle} className={className}>
         <ModalHeader style={{border: `none`}} toggle={toggle}>Регистарция</ModalHeader>
         <ModalBody>
-          <RegistrationForm />
-        </ModalBody>
-        {/* <ModalFooter>
-          <Button color="primary" onClick={toggle}>Do Something</Button>{' '}
-          <Button color="secondary" onClick={toggle}>Cancel</Button>
-        </ModalFooter> */}
+          <RegistrationForm setSubmitting={setSubmitting} setModal={setModal}/>
+        </ModalBody>       
       </Modal>
     </div>
   );
