@@ -32,12 +32,13 @@ const Example = (props) => {
 
   const allFieldsFulled = Object.values(form).every((value)=>Boolean(value));
   const isValidEmail = !!form.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
-  const isValidName = !!form.name.match(/^[a-zA-Z][a-zA-Z0-9-_\.]{2,40}$/);
-  const isValidPassword = true;
-  const isValidCheckPass = true;
+  const isValidName = !!form.name.match(/^[a-zA-Z][a-zA-Z0-9-_\.]{3,40}$/);
+  const isValidPassword = !!form.password.match(/(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,32}$/);
+  const isValidCheckPass = (!!form.checkPassword && form.password === form.checkPassword);
 
-  console.log(isValidName)
+  console.log(isValidCheckPass)
   
+
   const isValidForm = allFieldsFulled && isValidEmail && isValidName && isValidPassword && isValidCheckPass && conditions;
 
   const changeHandler = (e) => {
@@ -94,12 +95,23 @@ const Example = (props) => {
       </FormGroup>
       <FormGroup>
         <Label style={{fontWeight: `bold`}} for="password">Пароль</Label>
-        <Input value={form.pass} onChange={changeHandler} type="password" name="password" id="password" placeholder="Введите пароль" />
+        <Input 
+         style={{borderColor: getTouchedValidInput(isValidPassword, touched.password)}}
+        value={form.pass} 
+        onBlur={blurHandler}
+        onChange={changeHandler} type="password" name="password" id="password" placeholder="Введите пароль" />
+         
+        {touched.password && !isValidPassword && <p style={{color:`red`}}> Слишком простой пароль</p>}       
       </FormGroup>
       <Rules />
       <FormGroup>
         <Label style={{fontWeight: `bold`}} for="checkPassword">Пароль еще раз</Label>
-        <Input value={form.checkPassword} onChange={changeHandler} type="checkPassword" name="checkPassword" id="checkPassword" placeholder="Введите еще раз пароль" />
+        <Input
+        style={{borderColor: getTouchedValidInput(isValidCheckPass, touched.checkPassword)}}
+        value={form.checkPassword} 
+        onBlur={blurHandler}
+        onChange={changeHandler} type="password" name="checkPassword" id="checkPassword" placeholder="Введите еще раз пароль" />
+        {touched.checkPassword && !isValidCheckPass && <p style={{color:`red`}}> Пароли не совпадают</p>}
       </FormGroup>
       <FormGroup check>
         <Label check>
