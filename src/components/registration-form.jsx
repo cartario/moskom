@@ -34,10 +34,11 @@ const Example = (props) => {
   const isValidEmail = !!form.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
   const isValidName = !!form.name.match(/^[a-zA-Z][a-zA-Z0-9-_\.]{3,40}$/);
   const isValidPassword = !!form.password.match(/(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,32}$/);
-  const isValidCheckPass = (!!form.checkPassword && form.password === form.checkPassword);
-
-  console.log(isValidCheckPass)
-  
+  const isValidCheckPass = (
+    form.checkPassword && 
+    form.password === form.checkPassword && 
+    form.checkPassword !== form.email &&
+    form.checkPassword !== form.name);
 
   const isValidForm = allFieldsFulled && isValidEmail && isValidName && isValidPassword && isValidCheckPass && conditions;
 
@@ -91,7 +92,18 @@ const Example = (props) => {
           type="text" 
           name="name" 
           id="name" />
-        {touched.name && !isValidName && <p style={{color:`red`}}> Не забудьте ввести корректный никнейм</p>}        
+        {touched.name && !isValidName && <div style={{fontSize: `12px`}}> 
+        Не забудьте ввести корректный никнейм. Никнейм:
+
+        <ul>
+          <li style={{color: `red`}}>должен начинаться с буквы</li>
+          <li style={{color: `red`}}>должен состоять из латинских символов</li>
+          <li style={{color: `grey`}}>может содержать цифры и нижнее подчеркивание</li>
+          
+
+        </ul>
+         </div>}
+        
       </FormGroup>
       <FormGroup>
         <Label style={{fontWeight: `bold`}} for="password">Пароль</Label>
@@ -111,7 +123,11 @@ const Example = (props) => {
         value={form.checkPassword} 
         onBlur={blurHandler}
         onChange={changeHandler} type="password" name="checkPassword" id="checkPassword" placeholder="Введите еще раз пароль" />
-        {touched.checkPassword && !isValidCheckPass && <p style={{color:`red`}}> Пароли не совпадают</p>}
+        {form.email && form.checkPassword === form.email && <p style={{color:`red`}}>Пароль не должен совпадать с почтой</p>}
+        {form.name && form.checkPassword === form.name && <p style={{color:`red`}}>Пароль не должен совпадать с никнеймом</p>}
+        {touched.checkPassword && form.checkPassword !==form.password ? <p style={{color:`red`}}> Пароли не совпадают</p> :
+        form.checkPassword && isValidCheckPass && <span style={{fontSize:`12px`}}> Пароли совпадают</span>
+        }
       </FormGroup>
       <FormGroup check>
         <Label check>
