@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import {getTouchedValidEmail} from '../validation';
 
 const Rules = () => {
   return (
@@ -17,49 +18,34 @@ const Rules = () => {
 const Example = (props) => {
   const {setSubmitting, setModal} = props;
   
-  const [email, setMail] = useState(``);
-  const [name, setName] = useState(``);
-  const [pass, setPass] = useState(``);
-  const [checkPass, setCheckPass] = useState(``);
+  const [form, setForm] = useState({
+    email: ``,
+    name: ``,
+    password: ``,
+    checkPassword: ``,    
+  });
   const [conditions, setConditions] = useState(false);
-
-  const allFieldsFulled = Boolean(email.length) && name.length && pass.length && checkPass.length;
-  const isValidField = true;
-  const isValidForm = allFieldsFulled && isValidField && conditions;
-
   const [touched, setTouched] = useState(false);
 
-  const a = email.length > 6 ? `green` : `red`; 
+  const allFieldsFulled = Boolean(form.email.length) && form.name.length && form.password.length && form.checkPassword.length;
+  const isValidEmail = !!form.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+  
+  const isValidForm = allFieldsFulled && isValidEmail  && conditions;
 
-  const changeHandlerName = (e) => {
-    const value = e.target.value;      
-    setName(value);
+  const changeHandler = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;    
+    setForm({
+      ...form, [name]:value
+    });    
   };
 
-  const changeHandlerEmail = (e) => {
-    const value = e.target.value;    
-    setMail(value);
-    setTouched(false)
-  }
-
-  const changeHandlerPass = (e) => {
-    const value = e.target.value;    
-    setPass(value);
-  }
-
-  const changeHandlerCheckPass = (e) => {
-    const value = e.target.value;    
-    setCheckPass(value);
+  const blurHandler = (e) => {     
+    setTouched(true);   
   }
 
   const changeHandlerConditions = () => {     
     setConditions(!conditions);    
-  }
-
-  const blurHandler = () => {
-    setTouched(!touched);
-
-    console.log(touched)
   }
 
   return (
@@ -67,29 +53,37 @@ const Example = (props) => {
       e.preventDefault();
       setSubmitting(true);
       setModal(false);
-      console.log(JSON.stringify({name, email,pass, checkPass, conditions}));
+      console.log(JSON.stringify(form));
     }}>
       
       <FormGroup>
         <Label style={{fontWeight: `bold`}} for="email">Email</Label>
-        <Input style={{borderColor: a}} value={email} onFocus={()=>setTouched(false)} onBlur={blurHandler} onChange={changeHandlerEmail} type="email" name="email" id="email" placeholder="Введите e-mail" />
+        <Input style={{borderColor: getTouchedValidEmail(isValidEmail, touched)}} 
+        value={form.email} 
+        onFocus={()=>{}} 
+        onBlur={blurHandler} 
+        onChange={changeHandler}        
+        type="email" name="email" 
+        id="email" 
+        placeholder="Введите e-mail" />
+        {touched && !isValidEmail && <p style={{color:`red`}}>Не забудьте ввести действительный email</p>}
       </FormGroup>
       <FormGroup>
-        <Label style={{fontWeight: `bold`}} for="nikname">Никнейм</Label>
-        <Input value={name} onChange={changeHandlerName} type="text" name="nikname" id="nikname" />        
+        <Label style={{fontWeight: `bold`}} for="name">Никнейм</Label>
+        <Input value={form.name} onChange={changeHandler} type="text" name="name" id="name" />        
       </FormGroup>
       <FormGroup>
         <Label style={{fontWeight: `bold`}} for="password">Пароль</Label>
-        <Input value={pass} onChange={changeHandlerPass} type="password" name="password" id="password" placeholder="Введите пароль" />
+        <Input value={form.pass} onChange={changeHandler} type="password" name="password" id="password" placeholder="Введите пароль" />
       </FormGroup>
       <Rules />
       <FormGroup>
         <Label style={{fontWeight: `bold`}} for="checkPassword">Пароль еще раз</Label>
-        <Input value={checkPass} onChange={changeHandlerCheckPass} type="checkPassword" name="checkPassword" id="checkPassword" placeholder="Введите еще раз пароль" />
+        <Input value={form.checkPassword} onChange={changeHandler} type="checkPassword" name="checkPassword" id="checkPassword" placeholder="Введите еще раз пароль" />
       </FormGroup>
       <FormGroup check>
         <Label check>
-          <Input value={conditions} onChange={changeHandlerConditions} type="checkbox" />{' '}
+          <Input value={conditions} onChange={changeHandlerConditions} type="checkbox" name="conditions"/>{' '}
           Я принимаю условия <a href="#">пользовательского соглашения</a>
         </Label>
       </FormGroup>

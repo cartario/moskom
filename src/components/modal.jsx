@@ -12,7 +12,7 @@ const ModalExample = (props) => {
     className
   } = props;
 
-  const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState(true);
 
   const toggle = () => setModal(!modal);
 
