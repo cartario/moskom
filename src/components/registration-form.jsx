@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import {getTouchedValidEmail} from '../validation';
+import {getTouchedValidInput, getValidPassword} from '../validation';
 
 const Rules = () => {
   return (
@@ -25,12 +25,20 @@ const Example = (props) => {
     checkPassword: ``,    
   });
   const [conditions, setConditions] = useState(false);
-  const [touched, setTouched] = useState(false);
+  const [touched, setTouched] = useState({
+    email: false,
+    name: false,
+  });
 
-  const allFieldsFulled = Boolean(form.email.length) && form.name.length && form.password.length && form.checkPassword.length;
+  const allFieldsFulled = Object.values(form).every((value)=>Boolean(value));
   const isValidEmail = !!form.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+  const isValidName = !!form.name.match(/^[a-zA-Z][a-zA-Z0-9-_\.]{2,40}$/);
+  const isValidPassword = true;
+  const isValidCheckPass = true;
+
+  console.log(isValidName)
   
-  const isValidForm = allFieldsFulled && isValidEmail  && conditions;
+  const isValidForm = allFieldsFulled && isValidEmail && isValidName && isValidPassword && isValidCheckPass && conditions;
 
   const changeHandler = (e) => {
     const name = e.target.name;
@@ -40,13 +48,16 @@ const Example = (props) => {
     });    
   };
 
-  const blurHandler = (e) => {     
-    setTouched(true);   
-  }
+  const blurHandler = (e) => {    
+    const name = e.target.name;    
+    setTouched({
+      ...touched, [name]:true
+    });   
+  };
 
   const changeHandlerConditions = () => {     
     setConditions(!conditions);    
-  }
+  };
 
   return (
     <Form onSubmit={(e)=>{
@@ -58,19 +69,28 @@ const Example = (props) => {
       
       <FormGroup>
         <Label style={{fontWeight: `bold`}} for="email">Email</Label>
-        <Input style={{borderColor: getTouchedValidEmail(isValidEmail, touched)}} 
-        value={form.email} 
-        onFocus={()=>{}} 
-        onBlur={blurHandler} 
-        onChange={changeHandler}        
-        type="email" name="email" 
-        id="email" 
-        placeholder="Введите e-mail" />
-        {touched && !isValidEmail && <p style={{color:`red`}}>Не забудьте ввести действительный email</p>}
+        <Input 
+          style={{borderColor: getTouchedValidInput(isValidEmail, touched.email)}} 
+          value={form.email}        
+          onBlur={blurHandler} 
+          onChange={changeHandler}        
+          type="email" 
+          name="email" 
+          id="email" 
+          placeholder="Введите e-mail" />
+        {touched.email && !isValidEmail && <p style={{color:`red`}}>Не забудьте ввести действительный email</p>}
       </FormGroup>
       <FormGroup>
         <Label style={{fontWeight: `bold`}} for="name">Никнейм</Label>
-        <Input value={form.name} onChange={changeHandler} type="text" name="name" id="name" />        
+        <Input 
+          style={{borderColor: getTouchedValidInput(isValidName, touched.name)}}
+          value={form.name} 
+          onBlur={blurHandler} 
+          onChange={changeHandler} 
+          type="text" 
+          name="name" 
+          id="name" />
+        {touched.name && !isValidName && <p style={{color:`red`}}> Не забудьте ввести корректный никнейм</p>}        
       </FormGroup>
       <FormGroup>
         <Label style={{fontWeight: `bold`}} for="password">Пароль</Label>
