@@ -1,13 +1,3 @@
-export const getTouchedValidInput = (value, touched) => {  
-  switch(true) {
-    case value && touched:
-      return `green`;
-    case !value && touched:
-      return `red`;
-    default:
-      return ``;
-  }          
-};
 
 export const getValidPassword = (value) => {
   if(value){

@@ -1,21 +1,10 @@
 import React, {useState} from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import {getTouchedValidInput, getValidPassword} from '../validation';
+import {getValidPassword} from '../validation';
+import ErrorName from './error-name';
+import Rules from './rules';
 
-const Rules = () => {
-  return (
-    <>
-      <p>Пароль должен содержать</p>
-      <ul style={{listStyle: `none` , padding: 0}}>
-        <li>От 6 до 32 символов</li>
-        <li>Цифру</li>
-        <li>Заглавную и строчную букву</li>
-      </ul>
-    </>
-  );
-};
-
-const Example = (props) => {
+export default (props) => {
   const {setSubmitting, setModal} = props;
   
   const [form, setForm] = useState({
@@ -24,7 +13,9 @@ const Example = (props) => {
     password: ``,
     checkPassword: ``,    
   });
+
   const [conditions, setConditions] = useState(false);
+
   const [touched, setTouched] = useState({
     email: false,
     name: false,
@@ -72,7 +63,7 @@ const Example = (props) => {
     }}>
       
       <FormGroup>
-        <Label style={{fontWeight: `bold`}} for="email">Email</Label>
+        <Label className="label" for="email">Email</Label>
         <Input           
           valid = {isValidEmail&&touched.email} 
           invalid = {!isValidEmail&&touched.email} 
@@ -86,7 +77,7 @@ const Example = (props) => {
         {touched.email && !isValidEmail && <p style={{color:`red`}}>Не забудьте ввести действительный email</p>}
       </FormGroup>
       <FormGroup>
-        <Label style={{fontWeight: `bold`}} for="name">Никнейм</Label>
+        <Label className="label" for="name">Никнейм</Label>
         <Input 
           valid = {isValidName&&touched.name} 
           invalid = {!isValidName&&touched.name} 
@@ -96,19 +87,11 @@ const Example = (props) => {
           type="text" 
           name="name" 
           id="name" />
-        {touched.name && !isValidName && <div style={{fontSize: `12px`}}> 
-        Не забудьте ввести корректный никнейм. Никнейм:
-
-        <ul>
-          <li style={{color: `red`}}>должен начинаться с буквы</li>
-          <li style={{color: `red`}}>должен состоять из латинских символов без пробелов</li>
-          <li style={{color: `grey`}}>может содержать цифры и нижнее подчеркивание</li>
-        </ul>
-         </div>}
+        {!isValidName&&touched.name && <ErrorName />}
         
       </FormGroup>
       <FormGroup>
-        <Label style={{fontWeight: `bold`}} for="password">Пароль</Label>
+        <Label className="label" for="password">Пароль</Label>
         <Input 
         valid = {isValidPassword&&touched.password} 
         invalid = {!isValidPassword&&touched.password} 
@@ -119,7 +102,7 @@ const Example = (props) => {
       </FormGroup>
       <Rules />
       <FormGroup>
-        <Label style={{fontWeight: `bold`}} for="checkPassword">Пароль еще раз</Label>
+        <Label className="label" for="checkPassword">Пароль еще раз</Label>
         <Input
         valid = {isValidCheckPass&&touched.checkPassword} 
         invalid = {!isValidCheckPass&&touched.checkPassword} 
@@ -138,9 +121,9 @@ const Example = (props) => {
           Я принимаю условия <a href="#">пользовательского соглашения</a>
         </Label>
       </FormGroup>
-      <div style={{textAlign: `center`, }}><Button disabled={!isValidForm} style={{backgroundColor: `#558CB7`}}>Зарегистрироваться</Button></div>
+      <div className="center">
+        <Button disabled={!isValidForm} style={{backgroundColor: `#558CB7`}}>Зарегистрироваться</Button>
+      </div>
     </Form>
   );
 }
-
-export default Example;
