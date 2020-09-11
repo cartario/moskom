@@ -48,3 +48,11 @@
 .center {
   text-align: center;
 }
+
+.checkPass {
+  font-size: 12px;
+}
+
+.error {
+  color: red;
+}

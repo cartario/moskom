@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import {getValidPassword} from '../validation';
+import {validationSchema, getValidPassword} from '../validation';
 import ErrorName from './error-name';
 import Rules from './rules';
+import ErrorCheckPass from './error-check-pass';
 
 export default (props) => {
   const {setSubmitting, setModal} = props;
@@ -23,16 +24,7 @@ export default (props) => {
     checkPassword: false,
   });
 
-  const allFieldsFulled = Object.values(form).every((value)=>Boolean(value));
-  const isValidEmail = !!form.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
-  const isValidName = !!form.name.match(/^[a-zA-Z][a-zA-Z0-9-_\.]{3,40}$/);
-  const isValidPassword = !!form.password.match(/(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,32}$/);
-  const isValidCheckPass = Boolean(
-    form.checkPassword && 
-    form.password === form.checkPassword && 
-    form.checkPassword !== form.email &&
-    form.checkPassword !== form.name);
-
+  const {allFieldsFulled,isValidEmail, isValidName,isValidPassword,isValidCheckPass} = validationSchema(form);
   const isValidForm = allFieldsFulled && isValidEmail && isValidName && isValidPassword && isValidCheckPass && conditions;
 
   const changeHandler = (e) => {
@@ -65,39 +57,27 @@ export default (props) => {
       <FormGroup>
         <Label className="label" for="email">Email</Label>
         <Input           
-          valid = {isValidEmail&&touched.email} 
-          invalid = {!isValidEmail&&touched.email} 
-          value={form.email}        
-          onBlur={blurHandler} 
-          onChange={changeHandler}        
-          type="email" 
-          name="email" 
-          id="email" 
-          placeholder="Введите e-mail" />
+          valid = {isValidEmail&&touched.email} invalid = {!isValidEmail&&touched.email} 
+          value={form.email} onBlur={blurHandler} onChange={changeHandler}        
+          type="email" name="email" id="email" placeholder="Введите e-mail" />
         {touched.email && !isValidEmail && <p style={{color:`red`}}>Не забудьте ввести действительный email</p>}
       </FormGroup>
       <FormGroup>
         <Label className="label" for="name">Никнейм</Label>
         <Input 
-          valid = {isValidName&&touched.name} 
-          invalid = {!isValidName&&touched.name} 
-          value={form.name} 
-          onBlur={blurHandler} 
-          onChange={changeHandler} 
-          type="text" 
-          name="name" 
-          id="name" />
-        {!isValidName&&touched.name && <ErrorName />}
-        
+          valid = {isValidName&&touched.name} invalid = {!isValidName&&touched.name} 
+          value={form.name} onBlur={blurHandler} onChange={changeHandler} 
+          type="text" name="name" id="name" />
+
+        {!isValidName&&touched.name && <ErrorName />} 
+
       </FormGroup>
       <FormGroup>
         <Label className="label" for="password">Пароль</Label>
         <Input 
-        valid = {isValidPassword&&touched.password} 
-        invalid = {!isValidPassword&&touched.password} 
-        value={form.pass} 
-        onBlur={blurHandler}
-        onChange={changeHandler} type="password" name="password" id="password" placeholder="Введите пароль" />
+        valid = {isValidPassword&&touched.password} invalid = {!isValidPassword&&touched.password} 
+        value={form.pass} onBlur={blurHandler} onChange={changeHandler} 
+        type="password" name="password" id="password" placeholder="Введите пароль" />
         {touched.password && !isValidPassword && <p style={{color:`red`}}> Слишком простой пароль</p>}       
       </FormGroup>
       <Rules />
@@ -106,14 +86,13 @@ export default (props) => {
         <Input
         valid = {isValidCheckPass&&touched.checkPassword} 
         invalid = {!isValidCheckPass&&touched.checkPassword} 
-        value={form.checkPassword} 
-        onBlur={blurHandler}
+        value={form.checkPassword} onBlur={blurHandler}
         onChange={changeHandler} type="password" name="checkPassword" id="checkPassword" placeholder="Введите еще раз пароль" />
-        {form.email && form.checkPassword === form.email && <p style={{color:`red`}}>Пароль не должен совпадать с почтой</p>}
-        {form.name && form.checkPassword === form.name && <p style={{color:`red`}}>Пароль не должен совпадать с никнеймом</p>}
-        {touched.checkPassword && form.checkPassword !==form.password ? <p style={{color:`red`}}> Пароли не совпадают</p> :
-        form.checkPassword && isValidCheckPass && <span style={{fontSize:`12px`}}> Пароли совпадают</span>
-        }
+        
+        {form.checkPassword && isValidCheckPass ?
+          <span className="checkPass checkPassOk"> Пароли совпадают</span> :
+          <ErrorCheckPass form={form} touched={touched}/>}
+        
       </FormGroup>
       <FormGroup check>
         <Label check>
