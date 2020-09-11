@@ -28,13 +28,15 @@ const Example = (props) => {
   const [touched, setTouched] = useState({
     email: false,
     name: false,
+    password: false,
+    checkPassword: false,
   });
 
   const allFieldsFulled = Object.values(form).every((value)=>Boolean(value));
   const isValidEmail = !!form.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
   const isValidName = !!form.name.match(/^[a-zA-Z][a-zA-Z0-9-_\.]{3,40}$/);
   const isValidPassword = !!form.password.match(/(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,32}$/);
-  const isValidCheckPass = (
+  const isValidCheckPass = Boolean(
     form.checkPassword && 
     form.password === form.checkPassword && 
     form.checkPassword !== form.email &&
@@ -71,8 +73,9 @@ const Example = (props) => {
       
       <FormGroup>
         <Label style={{fontWeight: `bold`}} for="email">Email</Label>
-        <Input 
-          style={{borderColor: getTouchedValidInput(isValidEmail, touched.email)}} 
+        <Input           
+          valid = {isValidEmail&&touched.email} 
+          invalid = {!isValidEmail&&touched.email} 
           value={form.email}        
           onBlur={blurHandler} 
           onChange={changeHandler}        
@@ -85,7 +88,8 @@ const Example = (props) => {
       <FormGroup>
         <Label style={{fontWeight: `bold`}} for="name">Никнейм</Label>
         <Input 
-          style={{borderColor: getTouchedValidInput(isValidName, touched.name)}}
+          valid = {isValidName&&touched.name} 
+          invalid = {!isValidName&&touched.name} 
           value={form.name} 
           onBlur={blurHandler} 
           onChange={changeHandler} 
@@ -97,10 +101,8 @@ const Example = (props) => {
 
         <ul>
           <li style={{color: `red`}}>должен начинаться с буквы</li>
-          <li style={{color: `red`}}>должен состоять из латинских символов</li>
+          <li style={{color: `red`}}>должен состоять из латинских символов без пробелов</li>
           <li style={{color: `grey`}}>может содержать цифры и нижнее подчеркивание</li>
-          
-
         </ul>
          </div>}
         
@@ -108,18 +110,19 @@ const Example = (props) => {
       <FormGroup>
         <Label style={{fontWeight: `bold`}} for="password">Пароль</Label>
         <Input 
-         style={{borderColor: getTouchedValidInput(isValidPassword, touched.password)}}
+        valid = {isValidPassword&&touched.password} 
+        invalid = {!isValidPassword&&touched.password} 
         value={form.pass} 
         onBlur={blurHandler}
         onChange={changeHandler} type="password" name="password" id="password" placeholder="Введите пароль" />
-         
         {touched.password && !isValidPassword && <p style={{color:`red`}}> Слишком простой пароль</p>}       
       </FormGroup>
       <Rules />
       <FormGroup>
         <Label style={{fontWeight: `bold`}} for="checkPassword">Пароль еще раз</Label>
         <Input
-        style={{borderColor: getTouchedValidInput(isValidCheckPass, touched.checkPassword)}}
+        valid = {isValidCheckPass&&touched.checkPassword} 
+        invalid = {!isValidCheckPass&&touched.checkPassword} 
         value={form.checkPassword} 
         onBlur={blurHandler}
         onChange={changeHandler} type="password" name="checkPassword" id="checkPassword" placeholder="Введите еще раз пароль" />
