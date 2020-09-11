@@ -26,5 +26,3 @@ export const validationSchema = (form) => {
       form.checkPassword !== form.email && form.checkPassword !== form.name),        
   }
 };
-
-

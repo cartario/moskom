@@ -8,23 +8,11 @@ import ErrorCheckPass from './error-check-pass';
 export default (props) => {
   const {setSubmitting, setModal} = props;
   
-  const [form, setForm] = useState({
-    email: ``,
-    name: ``,
-    password: ``,
-    checkPassword: ``,    
-  });
-
+  const [form, setForm] = useState({email: ``, name: ``, password: ``, checkPassword: ``});
   const [conditions, setConditions] = useState(false);
+  const [touched, setTouched] = useState({email: false, name: false, password: false, checkPassword: false});
 
-  const [touched, setTouched] = useState({
-    email: false,
-    name: false,
-    password: false,
-    checkPassword: false,
-  });
-
-  const {allFieldsFulled,isValidEmail, isValidName,isValidPassword,isValidCheckPass} = validationSchema(form);
+  const {allFieldsFulled, isValidEmail, isValidName, isValidPassword, isValidCheckPass} = validationSchema(form);
   const isValidForm = allFieldsFulled && isValidEmail && isValidName && isValidPassword && isValidCheckPass && conditions;
 
   const changeHandler = (e) => {
@@ -42,25 +30,20 @@ export default (props) => {
     });   
   };
 
-  const changeHandlerConditions = () => {     
-    setConditions(!conditions);    
-  };
-
   return (
     <Form onSubmit={(e)=>{
       e.preventDefault();
       setSubmitting(true);
       setModal(false);
       console.log(JSON.stringify(form));
-    }}>
-      
+    }}>      
       <FormGroup>
         <Label className="label" for="email">Email</Label>
         <Input           
           valid = {isValidEmail&&touched.email} invalid = {!isValidEmail&&touched.email} 
           value={form.email} onBlur={blurHandler} onChange={changeHandler}        
           type="email" name="email" id="email" placeholder="Введите e-mail" />
-        {touched.email && !isValidEmail && <p style={{color:`red`}}>Не забудьте ввести действительный email</p>}
+        {touched.email && !isValidEmail && <p className="error">Не забудьте ввести действительный email</p>}
       </FormGroup>
       <FormGroup>
         <Label className="label" for="name">Никнейм</Label>
@@ -78,7 +61,7 @@ export default (props) => {
         valid = {isValidPassword&&touched.password} invalid = {!isValidPassword&&touched.password} 
         value={form.pass} onBlur={blurHandler} onChange={changeHandler} 
         type="password" name="password" id="password" placeholder="Введите пароль" />
-        {touched.password && !isValidPassword && <p style={{color:`red`}}> Слишком простой пароль</p>}       
+        {touched.password && !isValidPassword && <p className="error"> Слишком простой пароль</p>}       
       </FormGroup>
       <Rules />
       <FormGroup>
@@ -96,7 +79,7 @@ export default (props) => {
       </FormGroup>
       <FormGroup check>
         <Label check>
-          <Input value={conditions} onChange={changeHandlerConditions} type="checkbox" name="conditions"/>{' '}
+          <Input value={conditions} onChange={()=>setConditions(!conditions)} type="checkbox" name="conditions"/>{' '}
           Я принимаю условия <a href="#">пользовательского соглашения</a>
         </Label>
       </FormGroup>
