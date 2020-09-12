@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/moskom/static/css/main.8e4a51ff.chunk.css",
-    "main.js": "/moskom/static/js/main.184d57df.chunk.js",
-    "main.js.map": "/moskom/static/js/main.184d57df.chunk.js.map",
+    "main.js": "/moskom/static/js/main.6891f20d.chunk.js",
+    "main.js.map": "/moskom/static/js/main.6891f20d.chunk.js.map",
     "runtime-main.js": "/moskom/static/js/runtime-main.f2e16dfd.js",
     "runtime-main.js.map": "/moskom/static/js/runtime-main.f2e16dfd.js.map",
     "static/css/2.d9ad5f5c.chunk.css": "/moskom/static/css/2.d9ad5f5c.chunk.css",
     "static/js/2.d10f86fd.chunk.js": "/moskom/static/js/2.d10f86fd.chunk.js",
     "static/js/2.d10f86fd.chunk.js.map": "/moskom/static/js/2.d10f86fd.chunk.js.map",
     "index.html": "/moskom/index.html",
-    "precache-manifest.8436afc3ebedff6e3d7863d5c3d1e297.js": "/moskom/precache-manifest.8436afc3ebedff6e3d7863d5c3d1e297.js",
+    "precache-manifest.3f7832d3a6999987c5fcc542c05c415e.js": "/moskom/precache-manifest.3f7832d3a6999987c5fcc542c05c415e.js",
     "service-worker.js": "/moskom/service-worker.js",
     "static/css/2.d9ad5f5c.chunk.css.map": "/moskom/static/css/2.d9ad5f5c.chunk.css.map",
     "static/css/main.8e4a51ff.chunk.css.map": "/moskom/static/css/main.8e4a51ff.chunk.css.map",
@@ -20,6 +20,6 @@
     "static/css/2.d9ad5f5c.chunk.css",
     "static/js/2.d10f86fd.chunk.js",
     "static/css/main.8e4a51ff.chunk.css",
-    "static/js/main.184d57df.chunk.js"
+    "static/js/main.6891f20d.chunk.js"
   ]
 }
