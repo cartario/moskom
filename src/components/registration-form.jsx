@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import {validationSchema, getValidPassword} from '../validation';
-import ErrorName from './error-name';
+import {validationSchema} from '../utils';
 import Rules from './rules';
+import ErrorName from './error-name';
 import ErrorCheckPass from './error-check-pass';
 
 export default (props) => {

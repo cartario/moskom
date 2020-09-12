@@ -2,11 +2,11 @@ import React from 'react';
 
 export default ({form, touched}) => {
   switch(true){
-    case form.email && form.checkPassword === form.email:
+    case form.email && form.password === form.email:
       return (
         <span className="checkPass error">Пароль не должен совпадать с почтой</span>
       );
-    case form.name && form.checkPassword === form.name:
+    case form.name && form.password === form.name:
       return (
         <span className="checkPass error">Пароль не должен совпадать с никнеймом</span>
       );

@@ -2,39 +2,26 @@ import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import RegistrationForm from './registration-form';
 
-const ModalExample = (props) => {
-  const [isSubmitting, setSubmitting] = useState(false); 
-  
-  const styledButton = isSubmitting ? `green` :  `#558CB7`;
-
-  const {
-    buttonLabel,
-    className
-  } = props;
-
-  const [modal, setModal] = useState(true);
+export default ({buttonLabel, className}) => {
+  const [isSubmitting, setSubmitting] = useState(false);
+  const [modal, setModal] = useState(false);
 
   const toggle = () => setModal(!modal);
 
-  return (
-    
-    <div>
+  return (    
+    <>
       <Button 
-        style={{backgroundColor: styledButton, borderColor: `#558CB7`}} 
-        color="danger" 
+        style={{backgroundColor: isSubmitting ? `green` :  `#558CB7`}}         
         onClick={toggle} 
         disabled={isSubmitting}
         >{buttonLabel}
       </Button>
       <Modal isOpen={modal} toggle={toggle} className={className}>
-        <ModalHeader style={{border: `none`}} toggle={toggle}>Регистарция</ModalHeader>
+        <ModalHeader style={{border: `none`}} toggle={toggle}>Регистрация</ModalHeader>
         <ModalBody>
           <RegistrationForm setSubmitting={setSubmitting} setModal={setModal}/>
         </ModalBody>       
       </Modal>
-    </div>
+    </>
   );
 }
-
-export default ModalExample;
-
