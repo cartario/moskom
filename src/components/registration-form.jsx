@@ -6,7 +6,7 @@ import ErrorName from './error-name';
 import ErrorCheckPass from './error-check-pass';
 
 export default (props) => {
-  const {setSubmitting, setModal} = props;
+  const {setSubmitting, setModal, setFormData} = props;
   
   const [form, setForm] = useState({email: ``, name: ``, password: ``, checkPassword: ``});
   const [conditions, setConditions] = useState(false);
@@ -33,9 +33,10 @@ export default (props) => {
   return (
     <Form onSubmit={(e)=>{
       e.preventDefault();
-      setSubmitting(true);
-      setModal(false);
-      console.log(JSON.stringify(form));
+      // setSubmitting(true);
+      // setModal(false);
+      setFormData(form);
+      // console.log(JSON.stringify(form));
     }}>      
       <FormGroup>
         <Label className="label" for="email">Email</Label>
@@ -85,7 +86,7 @@ export default (props) => {
         </Label>
       </FormGroup>
       <div className="center">
-        <Button disabled={!isValidForm} style={{backgroundColor: `#558CB7`}}>Зарегистрироваться</Button>
+        <Button disabled={!isValidForm} style={{backgroundColor: `#558CB7`}}>Далее</Button>
       </div>
     </Form>
   );

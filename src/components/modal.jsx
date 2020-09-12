@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody } from 'reactstrap';
 import RegistrationForm from './registration-form';
+import StepTwo from './step-two';
 
 export default ({buttonLabel, className}) => {
   const [isSubmitting, setSubmitting] = useState(false);
   const [modal, setModal] = useState(false);
+  const [formData, setFormData] = useState(null);
 
   const toggle = () => setModal(!modal);
 
@@ -17,9 +19,11 @@ export default ({buttonLabel, className}) => {
         >{buttonLabel}
       </Button>
       <Modal isOpen={modal} toggle={toggle} className={className}>
-        <ModalHeader style={{border: `none`}} toggle={toggle}>Регистрация</ModalHeader>
+        <ModalHeader style={{border: `none`}} toggle={toggle}>Регистрация - 2 шаг</ModalHeader>
         <ModalBody>
-          <RegistrationForm setSubmitting={setSubmitting} setModal={setModal}/>
+          
+          {formData ? <StepTwo formData={formData} setSubmitting={setSubmitting} setModal={setModal}/> : <RegistrationForm setFormData={setFormData} setSubmitting={setSubmitting} setModal={setModal}/>
+          }
         </ModalBody>       
       </Modal>
     </>
