@@ -2,20 +2,21 @@ import React from 'react';
 
 
 
-export default ({password, touched}) => {
-  const isValidPassword = !!password.match(/(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,32}$/);
+export default ({password, touched}) => {  
   const passwordSize = !!password.match(/[0-9a-zA-Z]{6,32}$/);
   const hasDifLetters = !!password.match(/(?=.*[a-z])(?=.*[A-Z])/);
   const hasNumber = !!password.match(/(?=.*[0-9])/);
 
-  const getMessage = (password, text, inCase) => {
+  const getMessage = (password, inCase) => {
     switch(true) {
       case inCase:
-    return <li className="success">{text}</li>
+    return `success`
       case password && !inCase:
-    return <li className="error">{text}</li>
+    return `error`
+      case touched && !inCase:
+        return `error`
       default:
-    return <li className="default">{text}</li>      
+    return `default`      
     }
   };
 
@@ -23,11 +24,11 @@ export default ({password, touched}) => {
     <div className="rules">
       <span>Пароль должен содержать</span>
       <ul >
-       {getMessage(password, `От 6 до 32 символов`, passwordSize)}
-       {getMessage(password, `Цифру`, hasNumber)}
-       {getMessage(password, `Заглавную и строчную букву`, hasDifLetters)}       
-        {/* <li>{password}</li>
-        <li>{JSON.stringify(hasDifLetters)}</li> */}
+        <li className={password.length < 2 ? `default` : getMessage(password, passwordSize)}>От 6 до 32 символов</li>
+        <li className={password.length < 2 ? `default` :  getMessage(password, hasNumber)}>Цифру</li>
+        <li className={password.length < 2 ? `default` : getMessage(password, hasDifLetters)}>Заглавную и строчную букву</li>
+       
+
       </ul>
     </div>
   );
