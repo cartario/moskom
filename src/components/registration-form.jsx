@@ -49,7 +49,7 @@ export default (props) => {
         <Label className="label" for="name">Никнейм</Label>
         <Input 
           valid = {isValidName&&touched.name} invalid = {!isValidName&&touched.name} 
-          value={form.name} onBlur={blurHandler} onChange={changeHandler} 
+          value={form.name} onBlur={blurHandler} onChange={changeHandler}
           type="text" name="name" id="name" />
 
         {!isValidName&&touched.name && <ErrorName />} 
