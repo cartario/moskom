@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/moskom/precache-manifest.4b60621c2db7b15b198693b0e3eac19a.js"
+  "/moskom/precache-manifest.8436afc3ebedff6e3d7863d5c3d1e297.js"
 );
 
 self.addEventListener('message', (event) => {
