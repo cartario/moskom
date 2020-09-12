@@ -61,9 +61,10 @@ export default (props) => {
         valid = {isValidPassword&&touched.password} invalid = {!isValidPassword&&touched.password} 
         value={form.pass} onBlur={blurHandler} onChange={changeHandler} 
         type="password" name="password" id="password" placeholder="Введите пароль" />
-        {touched.password && !isValidPassword && <p className="error"> Слишком простой пароль</p>}       
+        {touched.password && !isValidPassword && <p className="error"> Слишком простой пароль</p>}
+        <Rules password={form.password} touched={touched.password}/>       
       </FormGroup>
-      <Rules password={form.password} touched={touched.password}/>
+      
       <FormGroup>
         <Label className="label" for="checkPassword">Пароль еще раз</Label>
         <Input

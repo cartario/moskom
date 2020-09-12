@@ -9,7 +9,7 @@ export default ({password, touched}) => {
   return (
     <div className="rules">
       <span>Пароль должен содержать</span>
-      <ul >
+      <ul>
         <li className={          
           password.length < 2 &&!touched ? `default` : getMessage(password, passwordSize, touched)}>
           От 6 до 32 символов</li>
