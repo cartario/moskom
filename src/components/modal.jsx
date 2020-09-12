@@ -19,10 +19,10 @@ export default ({buttonLabel, className}) => {
         >{buttonLabel}
       </Button>
       <Modal isOpen={modal} toggle={toggle} className={className}>
-        <ModalHeader style={{border: `none`}} toggle={toggle}>Регистрация - 2 шаг</ModalHeader>
+        <ModalHeader style={{border: `none`}} toggle={toggle}>Регистрация</ModalHeader>
         <ModalBody>
           
-          {formData ? <StepTwo formData={formData} setSubmitting={setSubmitting} setModal={setModal}/> : <RegistrationForm setFormData={setFormData} setSubmitting={setSubmitting} setModal={setModal}/>
+          {formData ? <StepTwo setFormData={setFormData} formData={formData} setSubmitting={setSubmitting} setModal={setModal}/> : <RegistrationForm setFormData={setFormData} setSubmitting={setSubmitting} setModal={setModal}/>
           }
         </ModalBody>       
       </Modal>
