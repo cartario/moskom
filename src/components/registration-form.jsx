@@ -63,7 +63,7 @@ export default (props) => {
         type="password" name="password" id="password" placeholder="Введите пароль" />
         {touched.password && !isValidPassword && <p className="error"> Слишком простой пароль</p>}       
       </FormGroup>
-      <Rules />
+      <Rules password={form.password} touched={touched.password}/>
       <FormGroup>
         <Label className="label" for="checkPassword">Пароль еще раз</Label>
         <Input
